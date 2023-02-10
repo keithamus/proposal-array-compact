@@ -27,7 +27,7 @@ usually handled by calling [`filter` with an identity function
 array.filter(i => i)
 ```
 
-or by passing the [`Boolean` value as a predicate function][filter_b]:
+or by passing the [`Boolean` value as a predicate function (133K results)][filter_b]:
 
 ```js
 array.filter(Boolean)
@@ -55,7 +55,7 @@ or nullish (when `false`).
 - None as of yet.
 
 [filter_id]: https://cs.github.com/?scopeName=All+repos&scope=&q=%2F.filter%5C%28%5Ba-z%5D%5Cs*%3D%3E%5Cs*%5Ba-z%5D%5C%29%2F+%28language%3AJavaScript+OR+language%3ATypeScript%29
-[filter_b]: https://cs.github.com/?q=%2F.filter%5C(Boolean%5C)%2F%20(language%3AJavaScript%20OR%20language%3ATypeScript)%20repo%3Afacebook%2Freact&scopeName=All%20repos&scope=
+[filter_b]: https://cs.github.com/?q=%2F.filter%5C(Boolean%5C)%2F%20(language%3AJavaScript%20OR%20language%3ATypeScript)&scopeName=All%20repos&scope=
 [lodash]: https://lodash.com/docs/4.17.15#compact
 [lodash-npm]: https://www.npmjs.com/package/lodash.compact
 [sugar]: https://sugarjs.com/docs/#/Array/compact
