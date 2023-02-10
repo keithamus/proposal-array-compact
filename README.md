@@ -1,61 +1,62 @@
-# template-for-proposals
+# proposal-array-compact
 
-A repository template for ECMAScript proposals.
+A proposal to create a more compact array, by discarding falsey values
 
-## Before creating a proposal
+```js
+const array = [0, 1, false, 2, '', 3]
 
-Please ensure the following:
-  1. You have read the [process document](https://tc39.github.io/process-document/)
-  1. You have reviewed the [existing proposals](https://github.com/tc39/proposals/)
-  1. You are aware that your proposal requires being a member of TC39, or locating a TC39 delegate to "champion" your proposal
+array.compact()
+// =>  [1, 2 3]
+```
 
-## Create your proposal repo
+## Champions
 
-Follow these steps:
-  1. Click the green ["use this template"](https://github.com/tc39/template-for-proposals/generate) button in the repo header. (Note: Do not fork this repo in GitHub's web interface, as that will later prevent transfer into the TC39 organization)
-  1. Update the biblio to the latest version: `npm install --save-dev --save-exact @tc39/ecma262-biblio@latest`.
-  1. Go to your repo settings “Options” page, under “GitHub Pages”, and set the source to the **main branch** under the root (and click Save, if it does not autosave this setting)
-      1. check "Enforce HTTPS"
-      1. On "Options", under "Features", Ensure "Issues" is checked, and disable "Wiki", and "Projects" (unless you intend to use Projects)
-      1. Under "Merge button", check "automatically delete head branches"
-<!--
-  1. Avoid merge conflicts with build process output files by running:
-      ```sh
-      git config --local --add merge.output.driver true
-      git config --local --add merge.output.driver true
-      ```
-  1. Add a post-rewrite git hook to auto-rebuild the output on every commit:
-      ```sh
-      cp hooks/post-rewrite .git/hooks/post-rewrite
-      chmod +x .git/hooks/post-rewrite
-      ```
--->
-  3. ["How to write a good explainer"][explainer] explains how to make a good first impression.
+- Keith Cirkel ([@keithamus](https://github.com/keithamus/))
 
-      > Each TC39 proposal should have a `README.md` file which explains the purpose
-      > of the proposal and its shape at a high level.
-      >
-      > ...
-      >
-      > The rest of this page can be used as a template ...
+## Status
 
-      Your explainer can point readers to the `index.html` generated from `spec.emu`
-      via markdown like
+Current [Stage](https://tc39.es/process-document/): 0
 
-      ```markdown
-      You can browse the [ecmarkup output](https://ACCOUNT.github.io/PROJECT/)
-      or browse the [source](https://github.com/ACCOUNT/PROJECT/blob/HEAD/spec.emu).
-      ```
+## Motivation
 
-      where *ACCOUNT* and *PROJECT* are the first two path elements in your project's Github URL.
-      For example, for github.com/**tc39**/**template-for-proposals**, *ACCOUNT* is "tc39"
-      and *PROJECT* is "template-for-proposals".
+Compacting an Array to only truthy values is a common operation. It's
+usually handled by calling [`filter` with an identity function
+(44k results)][filter_id]:
 
+```js
+array.filter(i => i)
+```
 
-## Maintain your proposal repo
+or by passing the [`Boolean` value as a predicate function][filter_b]:
 
-  1. Make your changes to `spec.emu` (ecmarkup uses HTML syntax, but is not HTML, so I strongly suggest not naming it ".html")
-  1. Any commit that makes meaningful changes to the spec, should run `npm run build` and commit the resulting output.
-  1. Whenever you update `ecmarkup`, run `npm run build` and commit any changes that come from that dependency.
+```js
+array.filter(Boolean)
+```
 
-  [explainer]: https://github.com/tc39/how-we-work/blob/HEAD/explainer.md
+Both of these can be somewhat tricky to reason about, and both
+styles can be used in the same codebase to make matters more
+confusing.
+
+[Lodash includes `_.compact()`][lodash] which as a [standalone
+dependency][lodash-npm] receives ~400,000 downloads per week.
+
+[Sugar includes `.compact(all)`][sugar] which may cause
+webcompat issues - as the `all` boolean (defaulting to false)
+determines if elements removed should be falsey (when `true`)
+or nullish (when `false`).
+
+## Other languages
+
+- [Ruby has a `.compact` method][ruby], which wil return an
+  Array with all `nil` elements removed
+
+## Polyfill
+
+- None as of yet.
+
+[filter_id]: https://cs.github.com/?scopeName=All+repos&scope=&q=%2F.filter%5C%28%5Ba-z%5D%5Cs*%3D%3E%5Cs*%5Ba-z%5D%5C%29%2F+%28language%3AJavaScript+OR+language%3ATypeScript%29
+[filter_b]: https://cs.github.com/?q=%2F.filter%5C(Boolean%5C)%2F%20(language%3AJavaScript%20OR%20language%3ATypeScript)%20repo%3Afacebook%2Freact&scopeName=All%20repos&scope=
+[lodash]: https://lodash.com/docs/4.17.15#compact
+[lodash-npm]: https://www.npmjs.com/package/lodash.compact
+[sugar]: [https://sugarjs.com/](https://sugarjs.com/docs/#/Array/compact)
+[ruby]: https://ruby-doc.org/core-2.7.0/Array.html#method-i-compact
