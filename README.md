@@ -58,5 +58,5 @@ or nullish (when `false`).
 [filter_b]: https://cs.github.com/?q=%2F.filter%5C(Boolean%5C)%2F%20(language%3AJavaScript%20OR%20language%3ATypeScript)%20repo%3Afacebook%2Freact&scopeName=All%20repos&scope=
 [lodash]: https://lodash.com/docs/4.17.15#compact
 [lodash-npm]: https://www.npmjs.com/package/lodash.compact
-[sugar]: [https://sugarjs.com/](https://sugarjs.com/docs/#/Array/compact)
+[sugar]: https://sugarjs.com/docs/#/Array/compact
 [ruby]: https://ruby-doc.org/core-2.7.0/Array.html#method-i-compact
